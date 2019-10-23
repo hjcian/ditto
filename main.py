@@ -86,8 +86,7 @@ class Ditto(object):
         self._isSubmitDone = True
         self._cunsumer.join()
 
-def make_static_mission(json_file):
-    scenario = json.load(open(json_file, errors='ignore'))
+def make_static_mission(scenario):
     URL = scenario['url']
     USE_BODY = False
     DATA = None
@@ -117,9 +116,11 @@ if __name__ == "__main__":
         parser = ArgumentParser()
         parser.add_argument("apidef", help="API definition file, see 'example.json' for example.")
         argv = parser.parse_args()
-        fn = make_static_mission(argv.apidef)
-        total = 3
-        jobs = [ random.randint(2, 5) for _ in range(total)]
+
+        scenario = json.load(open(argv.apidef, errors='ignore'))
+        jobs = scenario['reqpersec']
+        fn = make_static_mission(scenario)
+
         ditto = Ditto(static_mission=fn)
         
         LOGGER.info("---- [START]")
@@ -128,9 +129,7 @@ if __name__ == "__main__":
         LOGGER.info("---- [END]")
         dt = now() - t0
         LOGGER.info("---- Job done. entire spent: {:.1f} s".format(dt))
-        print(len(ditto.results))
-        # print(json.dumps(ditto.results, indent=4))
-        print(json.dumps(ditto.counter, indent=4))
+        LOGGER.info("---- Result stats:\n{}".format(json.dumps(ditto.counter, indent=4)))
     except Exception:
         LOGGER.error(traceback.format_exc())
         sys.exit(1)

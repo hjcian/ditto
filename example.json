@@ -11,6 +11,9 @@
         "parameterC": 12345
     },
     "reqpersec": [
-        
+        3,
+        6,
+        0,
+        2
     ]
 }

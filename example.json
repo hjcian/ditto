@@ -1,0 +1,16 @@
+{
+    "url": "https://api.ipify.org?format=json",
+    "method": "get",
+    "header": {
+        "User-Agent": "Mozilla/5.0",
+        "X-self-defined-parameter": "foobar"
+    },
+    "body": {
+        "parameterA": "foo",
+        "parameterB": "bar",
+        "parameterC": 12345
+    },
+    "reqpersec": [
+        
+    ]
+}
